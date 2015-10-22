@@ -32,25 +32,25 @@ class TableSql extends SourceDonnees
     }
 
     public function afficheTout() {
-        ManagerCrudSql::afficheTout($this);
+        return ManagerCrudSql::afficheTout($this);
     }
     public function chercheParClef($clef) {
-        ManagerCrudSql::chercheParClef($this, $clef);
+        return ManagerCrudSql::chercheParClef($this, $clef);
     }
     public function chercheParChamps(array $aDonnees) {
-        ManagerCrudSql::chercheParChamps($this, $aDonnees);
+        return ManagerCrudSql::chercheParChamps($this, $aDonnees);
     }
     public function insereEnregistrement(array $aAttributs) {
-        ManagerCrudSql::insereEnregistrement($this, $aAttributs);
+        return ManagerCrudSql::insereEnregistrement($this, $aAttributs);
     }
     public function modifieEnregistrement($clef, array $aNouveauxAttributs) {
-        ManagerCrudSql::modifieEnregistrement($this, $clef, $aNouveauxAttributs);
+        return ManagerCrudSql::modifieEnregistrement($this, $clef, $aNouveauxAttributs);
     }
     public function supprimeEnregistrement($clef) {
-        ManagerCrudSql::supprimeEnregistrement($this, $clef);
+        return ManagerCrudSql::supprimeEnregistrement($this, $clef);
     }
     public function supprimeTout() {
-        ManagerCrudSql::supprimeTout($this);
+        return ManagerCrudSql::supprimeTout($this);
     }
 
 }
