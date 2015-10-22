@@ -3,10 +3,10 @@ namespace SDQ\CrudManagement;
 require('classes/Autoloader.php');
 Autoloader::register();
 
-$csv = new Csv('test.csv','@');
+$csv = new Csv('test.csv',';');
 $csv->setAttributs(['id','nom']);
 $csv->setClefPrimaire('id');
-
+// $csv->supprimeTout();
 $enreg1 = ['id' => 1, 'nom' => 'seb'];
 $enreg2 = ['id' => 2, 'nom' => 'aline'];
 $enreg3 = ['id' => 3, 'nom' => 'null'];
@@ -19,9 +19,19 @@ $sql = new TableSql('test', $aAttr);
 $sql->setAttributs(['id','nom']);
 $sql->setClefPrimaire('id');
 
+$i = 4;
 foreach ($csv->afficheTout() as $enreg) {
-     $sql->insereEnregistrement($enreg);
+    $enreg['id'] = $i++;
+    $sql->insereEnregistrement($enreg);
 }
+
+foreach ($sql->chercheParChamps(['nom' => 'null']) as $enreg) {
+    $id = $enreg['id'];
+}
+
+$sql->modifieEnregistrement($id, ['nom' => 'test']);
 
 // $sql->supprimeTout();
 // $csv->supprimeTout();
+
+echo "OK";
