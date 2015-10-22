@@ -6,7 +6,7 @@ Autoloader::register();
 $csv = new Csv('test.csv',';');
 $csv->setAttributs(['id','nom']);
 $csv->setClefPrimaire('id');
-// $csv->supprimeTout();
+
 $enreg1 = ['id' => 1, 'nom' => 'seb'];
 $enreg2 = ['id' => 2, 'nom' => 'aline'];
 $enreg3 = ['id' => 3, 'nom' => 'null'];
@@ -27,11 +27,8 @@ foreach ($csv->afficheTout() as $enreg) {
 
 foreach ($sql->chercheParChamps(['nom' => 'null']) as $enreg) {
     $id = $enreg['id'];
+    $sql->modifieEnregistrement($id, ['nom' => 'test']);
 }
-
-$sql->modifieEnregistrement($id, ['nom' => 'test']);
 
 // $sql->supprimeTout();
 // $csv->supprimeTout();
-
-echo "OK";
