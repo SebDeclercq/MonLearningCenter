@@ -18,7 +18,14 @@ class ManagerCrudCsv implements IManagerCrud
         }
         else {
             $sLigne = implode($oSource->getSeparateur(), $aAttributs);
-            file_put_contents($oSource->getNom(), $sLigne.PHP_EOL, FILE_APPEND);
+            if (file_exists($oSource->getNom())) {
+                file_put_contents($oSource->getNom(), $sLigne.PHP_EOL, FILE_APPEND);
+            }
+            else {
+                $entete = implode($oSource->getSeparateur(),$oSource->getAttributs());
+                file_put_contents($oSource->getNom(), $entete.PHP_EOL, FILE_APPEND);
+                file_put_contents($oSource->getNom(), $sLigne.PHP_EOL, FILE_APPEND);
+            }
         }
     }
 // R
@@ -31,7 +38,7 @@ class ManagerCrudCsv implements IManagerCrud
             }
             $i++;
         }
-    return $aTotal;
+        return $aTotal;
     }
 
     public static function chercheParClef(SourceDonnees $oSource, $clef) {
@@ -100,7 +107,8 @@ class ManagerCrudCsv implements IManagerCrud
     }
 // D
     public static function supprimeTout(SourceDonnees $oSource) {
-        file_put_contents($oSource->getNom(), '');
+        $entete = implode($oSource->getSeparateur(),$oSource->getAttributs());
+        file_put_contents($oSource->getNom(), $entete);
     }
 
     public static function supprimeEnregistrement(SourceDonnees $oSource, $clef) {
