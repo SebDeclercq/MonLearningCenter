@@ -3,19 +3,25 @@ namespace SDQ\CrudManagement;
 require('classes/Autoloader.php');
 Autoloader::register();
 
+$csv = new Csv('test.csv','@');
+$csv->setAttributs(['id','nom']);
+$csv->setClefPrimaire('id');
 
-$source = new TableSql('test', $aAttr);
-$source->setAttributs(array('id','nom'));
-$source->setClefPrimaire('id');
+$enreg1 = ['id' => 1, 'nom' => 'seb'];
+$enreg2 = ['id' => 2, 'nom' => 'aline'];
+$enreg3 = ['id' => 3, 'nom' => 'null'];
+$csv->insereEnregistrement($enreg1);
+$csv->insereEnregistrement($enreg2);
+$csv->insereEnregistrement($enreg3);
 
+$aAttr = ['hote', 'base', 'id', 'mdp'];
+$sql = new TableSql('test', $aAttr);
+$sql->setAttributs(['id','nom']);
+$sql->setClefPrimaire('id');
 
-$attr1 = ['id'=>6, 'nom'=>'aline'];
-$attr2 = ['id'=>7, 'nom'=>'seb'];
-$attr3 = ['id'=>8, 'nom'=>'null'];
-$source->insereEnregistrement($attr1);
-$source->insereEnregistrement($attr2);
-$source->insereEnregistrement($attr3);
+foreach ($csv->afficheTout() as $enreg) {
+     $sql->insereEnregistrement($enreg);
+}
 
-
-// $source->supprimeEnregistrement(3);
-// $source->modifieEnregistrement(3,array('nom'=>'Essai'));
+// $sql->supprimeTout();
+// $csv->supprimeTout();
