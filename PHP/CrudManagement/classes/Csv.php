@@ -20,25 +20,25 @@ class Csv extends SourceDonnees
     }
 
     public function afficheTout() {
-        ManagerCrudCsv::afficheTout($this);
+        return ManagerCrudCsv::afficheTout($this);
     }
     public function chercheParClef($clef) {
-        ManagerCrudCsv::chercheParClef($this, $clef);
+        return ManagerCrudCsv::chercheParClef($this, $clef);
     }
     public function chercheParChamps(array $aDonnees) {
-        ManagerCrudCsv::chercheParChamps($this, $aDonnees);
+        return ManagerCrudCsv::chercheParChamps($this, $aDonnees);
     }
     public function insereEnregistrement(array $aAttributs) {
-        ManagerCrudCsv::insereEnregistrement($this, $aAttributs);
+        return ManagerCrudCsv::insereEnregistrement($this, $aAttributs);
     }
     public function modifieEnregistrement($clef, array $aNouveauxAttributs) {
-        ManagerCrudCsv::modifieEnregistrement($this, $clef, $aNouveauxAttributs);
+        return ManagerCrudCsv::modifieEnregistrement($this, $clef, $aNouveauxAttributs);
     }
     public function supprimeEnregistrement($clef) {
-        ManagerCrudCsv::supprimeEnregistrement($this, $clef);
+        return ManagerCrudCsv::supprimeEnregistrement($this, $clef);
     }
     public function supprimeTout() {
-        ManagerCrudCsv::supprimeTout($this);
+        return ManagerCrudCsv::supprimeTout($this);
     }
 
 }
