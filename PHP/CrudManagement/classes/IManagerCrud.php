@@ -11,6 +11,7 @@ interface IManagerCrud
     public static function chercheParClef(SourceDonnees $oSource, $clef);
     public static function chercheParChamps(SourceDonnees $oSource, array $aDonnees);
     public static function insereEnregistrement(SourceDonnees $oSource, array $aAttributs);
+    public static function insereMultiple(SourceDonnees $oSource, array $aListeAttributs);
     public static function modifieEnregistrement(SourceDonnees $oSource, $clef, array $aNouveauxAttributs);
     public static function supprimeEnregistrement(SourceDonnees $oSource, $clef);
     public static function supprimeTout(SourceDonnees $oSource);
