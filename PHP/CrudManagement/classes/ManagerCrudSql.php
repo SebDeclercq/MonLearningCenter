@@ -42,6 +42,11 @@ class ManagerCrudSql implements IManagerCrud
         }
 
     }
+    public static function insereMultiple(SourceDonnees $oSource, array $aListeAttributs) {
+        foreach ($aListeAttributs as $aAttributs) {
+            self::insereEnregistrement($oSource, $aAttributs);
+        }
+    }
 // R
     public static function afficheTout(SourceDonnees $oSource) {
         $sSql = 'SELECT * FROM '.$oSource->getNom();
