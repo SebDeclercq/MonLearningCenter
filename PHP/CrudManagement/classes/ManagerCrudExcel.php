@@ -33,7 +33,11 @@ class ManagerCrudExcel implements IManagerCrud
         }
         self::ecritFichier($oSource, $aLignes);
     }
-
+    public static function insereMultiple(SourceDonnees $oSource, array $aListeAttributs) {
+        foreach ($aListeAttributs as $aAttributs) {
+            self::insereEnregistrement($oSource, $aAttributs);
+        }
+    }
 // R
     public static function afficheTout(SourceDonnees $oSource) {
         return self::litFichier($oSource);
@@ -109,9 +113,6 @@ class ManagerCrudExcel implements IManagerCrud
         $aLignes = [];
         self::ecritFichier($oSource, $aLignes);
     }
-
-
-
 
     protected static function litFichier(SourceDonnees $oSource) {
         $oPhpExcel = \PHPExcel_IOFactory::load($oSource->getNom());
