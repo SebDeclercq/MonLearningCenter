@@ -2,22 +2,19 @@
 namespace SDQ\CrudManagement;
 require_once('PHPExcel/IOFactory.php');
 
-class ManagerCrudExcel #implements IManagerCrud
+class ManagerCrudExcel implements IManagerCrud
 {
-    public static function afficheTout(SourceDonnees $oSource) {
-        return self::litFichier($oSource);
-    }
-    public static function chercheParClef(SourceDonnees $oSource, $clef) {
-        $aLignes = self::litFichier($oSource);
-        foreach ($aLignes as $aLigne) {
-            if ($aLigne[$oSource->getClefPrimaire()] == $clef) {
-                return $aLigne;
-            }
-        }
-    }
-    // public static function chercheParChamps(SourceDonnees $oSource, array $aDonnees);
+// C
     public static function insereEnregistrement(SourceDonnees $oSource, array $aAttributs) {
-        $aLignes = self::litFichier($oSource);
+        try
+        {
+            $aLignes = self::litFichier($oSource);
+        }
+        catch(\Exception $e)
+        {
+            //  echo $e->getMessage()."\n";
+            $aLignes = [];
+        }
         $idx = count($aLignes)+1;
         $match = 0;
         foreach ($aAttributs as $sAttribut => $sValeur) {
@@ -36,9 +33,85 @@ class ManagerCrudExcel #implements IManagerCrud
         }
         self::ecritFichier($oSource, $aLignes);
     }
-    // public static function modifieEnregistrement(SourceDonnees $oSource, $clef, array $aNouveauxAttributs);
-    // public static function supprimeEnregistrement(SourceDonnees $oSource, $clef);
-    // public static function supprimeTout(SourceDonnees $oSource);
+
+// R
+    public static function afficheTout(SourceDonnees $oSource) {
+        return self::litFichier($oSource);
+    }
+    public static function chercheParClef(SourceDonnees $oSource, $clef) {
+        $aLignes = self::litFichier($oSource);
+        foreach ($aLignes as $aLigne) {
+            if ($aLigne[$oSource->getClefPrimaire()] == $clef) {
+                return $aLigne;
+            }
+        }
+    }
+    public static function chercheParChamps(SourceDonnees $oSource, array $aDonnees) {
+        $aEnregistrements = [];
+        $aLignes = self::litFichier($oSource);
+        foreach ($aLignes as $idx => $aLigne) {
+            if ($idx != 0) {
+                $match = 0;
+                foreach ($aDonnees as $sAttribut => $sValeur) {
+                    if ($aLigne[$sAttribut] == $sValeur) {
+                        $match++;
+                    }
+                }
+                if ($match == count($aDonnees)) {
+                    $aEnregistrements[] = $aLigne;
+                }
+            }
+        }
+        return $aEnregistrements;
+    }
+
+// U
+    public static function modifieEnregistrement(SourceDonnees $oSource, $clef, array $aNouveauxAttributs) {
+        $aLignes = self::litFichier($oSource);
+        foreach ($aLignes as $idx => $aLigne) {
+            if ($idx == 0) {
+                $aEnregistrements[] = $aLigne;
+            }
+            else {
+                if ($aLigne[$oSource->getClefPrimaire()] != $clef) {
+                    $aEnregistrements[] = $aLigne;
+                }
+                else {
+                    if (!empty($aNouveauxAttributs)) {
+                        foreach ($aNouveauxAttributs as $sAttribut=>$sValeur) {
+                            if (in_array($sAttribut, $oSource->getAttributs())) {
+                                $aLigne[$sAttribut] = $sValeur;
+                            }
+                        }
+                    }
+                    $aEnregistrements[] = $aLigne;
+                }
+            }
+        }
+        self::ecritFichier($oSource, $aEnregistrements);
+    }
+
+// D
+    public static function supprimeEnregistrement(SourceDonnees $oSource, $clef) {
+        $aLignes = self::litFichier($oSource);
+        foreach ($aLignes as $aLigne) {
+            if ($aLigne[$oSource->getClefPrimaire()] == $clef) {
+                continue;
+            }
+            else {
+                $aEnregistrements[] = $aLigne;
+            }
+        }
+        self::ecritFichier($oSource, $aEnregistrements);
+    }
+
+    public static function supprimeTout(SourceDonnees $oSource) {
+        $aLignes = [];
+        self::ecritFichier($oSource, $aLignes);
+    }
+
+
+
 
     protected static function litFichier(SourceDonnees $oSource) {
         $oPhpExcel = \PHPExcel_IOFactory::load($oSource->getNom());
@@ -71,15 +144,16 @@ class ManagerCrudExcel #implements IManagerCrud
             $oPhpExcel->getActiveSheet()->SetCellValue($lettre.$chiffre, $sAttribut);
             $lettre++;
         }
-
-        $chiffre = 2;
-        foreach ($aLignes as $aLigne) {
-            $lettre = 'A';
-            foreach ($aLigne as $idx => $sValeur) {
-                $oPhpExcel->getActiveSheet()->SetCellValue($lettre.$chiffre, $sValeur);
-                $lettre++;
+        if (!empty($aLignes)) {
+            $chiffre = 2;
+            foreach ($aLignes as $aLigne) {
+                $lettre = 'A';
+                foreach ($aLigne as $idx => $sValeur) {
+                    $oPhpExcel->getActiveSheet()->SetCellValue($lettre.$chiffre, $sValeur);
+                    $lettre++;
+                }
+                $chiffre++;
             }
-            $chiffre++;
         }
         $oWriterExcel = new \PHPExcel_Writer_Excel2007($oPhpExcel);
         $oWriterExcel->save($oSource->getNom());
