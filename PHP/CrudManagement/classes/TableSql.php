@@ -43,6 +43,9 @@ class TableSql extends SourceDonnees
     public function insereEnregistrement(array $aAttributs) {
         return ManagerCrudSql::insereEnregistrement($this, $aAttributs);
     }
+    public function insereMultiple(array $aListeAttributs) {
+        return ManagerCrudSql::insereMultiple($this, $aListeAttributs);
+    }
     public function modifieEnregistrement($clef, array $aNouveauxAttributs) {
         return ManagerCrudSql::modifieEnregistrement($this, $clef, $aNouveauxAttributs);
     }
