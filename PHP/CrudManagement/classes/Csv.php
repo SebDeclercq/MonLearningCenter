@@ -31,6 +31,9 @@ class Csv extends SourceDonnees
     public function insereEnregistrement(array $aAttributs) {
         return ManagerCrudCsv::insereEnregistrement($this, $aAttributs);
     }
+    public function insereMultiple(array $aListeAttributs) {
+        return ManagerCrudCsv::insereMultiple($this, $aListeAttributs);
+    }
     public function modifieEnregistrement($clef, array $aNouveauxAttributs) {
         return ManagerCrudCsv::modifieEnregistrement($this, $clef, $aNouveauxAttributs);
     }
