@@ -21,6 +21,9 @@ class Excel extends SourceDonnees
     public function insereEnregistrement(array $aAttributs) {
         return ManagerCrudExcel::insereEnregistrement($this, $aAttributs);
     }
+    public function insereMultiple(array $aListeAttributs) {
+        return ManagerCrudExcel::insereMultiple($this, $aListeAttributs);
+    }
     public function modifieEnregistrement($clef, array $aNouveauxAttributs) {
         return ManagerCrudExcel::modifieEnregistrement($this, $clef, $aNouveauxAttributs);
     }
