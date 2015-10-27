@@ -115,7 +115,13 @@ class ManagerCrudExcel implements IManagerCrud
     }
 
     protected static function litFichier(SourceDonnees $oSource) {
-        $oPhpExcel = \PHPExcel_IOFactory::load($oSource->getNom());
+        if (file_exists($oSource->getNom())) {
+            $oPhpExcel = \PHPExcel_IOFactory::load($oSource->getNom());
+        }
+        else {
+            throw new \InvalidArgumentException ('Le fichier '.$oSource->getNom().'n\'existe pas');
+        }
+        // $oPhpExcel = \PHPExcel_IOFactory::load($oSource->getNom());
         // Crée un array multidimensionnel avec un premier niveau ligne par ligne
         // et un secon cellule par cellule
         $i = 0;
