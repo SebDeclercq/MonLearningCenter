@@ -15,7 +15,7 @@ IManagerCrud est une interface avec 7 méthodes. Leurs signatures doivent
 être respectées par les classes l'implémentant.
 
 Cet ensemble de classes concrètes et de l'interface est construit en respectant
-les règles du *Design Pattern Strategy*, à savoir encapsuler chaque algorithme au
+les règles du **Design Pattern Strategy**, à savoir encapsuler chaque algorithme au
 sein d'une même famille et de les rendre interchangeable au sein de cette
 dernière. Ainsi, peu importe la classe implémentant IManagerCrud, elle répondra
 aux méthodes attendues.
@@ -28,7 +28,7 @@ Actuellement, ces classes sont au nombre de trois :
 
 Concernant ManagerCrudExcel, ce dernier se base sur la classe PHPExcel
 (disponible sur : https://phpexcel.codeplex.com/). ManagerCrudExcel est une
-classe "adaptée" dans le *Desin Pattern Adapter* : elle permet l'utilisation de
+classe "adaptée" dans le **Desin Pattern Adapter** : elle permet l'utilisation de
 la signature de PHPExcel et de ses méthodes, tout en se conformant à l'interface
 "IManagerCrud".
 
@@ -39,7 +39,7 @@ composition.
 ### L'interface SourceDonnees
 L'interface de la classe abstraite SourceDonnees est quant à elle créée afin
 de générer les différentes classes concrètes de format de données (fichier CSV,
- table SQL,...). Elle est constituée selon le *Design Pattern Factory Method* qui
+ table SQL,...). Elle est constituée selon le **Design Pattern Factory Method** qui
 permet d'instancier des objets concrets issus d'une classe abstraite qui sert
 à en généraliser la structure.
 
