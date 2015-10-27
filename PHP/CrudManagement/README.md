@@ -24,6 +24,7 @@ Actuellement, ces classes sont au nombre de trois :
 - ManagerCrudSql
 - ManageCrudCsv
 - ManagerCrudExcel
+- ManagerCrudPerinorm
 
 Concernant ManagerCrudExcel, ce dernier se base sur la classe PHPExcel
 (disponible sur : https://phpexcel.codeplex.com/). ManagerCrudExcel est une
@@ -42,11 +43,12 @@ de générer les différentes classes concrètes de format de données (fichier 
 permet d'instancier des objets concrets issus d'une classe abstraite qui sert
 à en généraliser la structure.
 
-Actuellement, ces classes sont au nombre de trois (et répondent aux classes
+Actuellement, ces classes sont au nombre de quatre (et répondent aux classes
 citées ci-dessus) :
 - TableSql
 - CSV
 - Excel
+- Perinorm (incluant PeriPSM et LgPerinorm)
 
 ## Exemple minimal de création de classe
 ### NouveauManagerCrud.php
