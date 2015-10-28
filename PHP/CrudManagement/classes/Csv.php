@@ -43,5 +43,9 @@ class Csv extends SourceDonnees
     public function supprimeTout() {
         return ManagerCrudCsv::supprimeTout($this);
     }
+    public function litAttributs() {
+        $this->_aAttributs = ManagerCrudCsv::litAttributs($this);
+        return $this->_aAttributs;
+    }
 
 }
