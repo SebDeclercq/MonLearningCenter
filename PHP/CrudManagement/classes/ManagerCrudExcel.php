@@ -165,4 +165,28 @@ class ManagerCrudExcel implements IManagerCrud
         $oWriterExcel = new \PHPExcel_Writer_Excel2007($oPhpExcel);
         $oWriterExcel->save($oSource->getNom());
     }
+    public static function litAttributs(SourceDonnees $oSource) {
+        if (file_exists($oSource->getNom())) {
+            $oPhpExcel = \PHPExcel_IOFactory::load($oSource->getNom());
+        }
+        else {
+            throw new \RuntimeException ('Le fichier '.$oSource->getNom().'n\'existe pas');
+        }
+        $i = 0;
+        foreach ($oPhpExcel->getSheet(0)->getRowIterator() as $ligne) {
+            switch ($i) {
+                case 0 : {
+                    $aLignes[$i] = [];
+                    foreach ($ligne->getCellIterator() as $cellule) {
+                        $aLignesEntete[] = $cellule->getValue();
+                    }
+                    break;
+                }
+                default :
+                    continue;
+            }
+            $i++;
+        }
+        return $aLignesEntete;
+    }
 }
