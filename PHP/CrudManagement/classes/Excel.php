@@ -33,4 +33,8 @@ class Excel extends SourceDonnees
     public function supprimeTout() {
         return ManagerCrudExcel::supprimeTout($this);
     }
+    public function litAttributs() {
+        $this->_aAttributs = ManagerCrudExcel::litAttributs($this);
+        return $this->_aAttributs;
+    }
 }
