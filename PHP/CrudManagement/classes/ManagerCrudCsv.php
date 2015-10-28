@@ -133,9 +133,20 @@ class ManagerCrudCsv implements IManagerCrud
         file_put_contents($oSource->getNom(), $aEnregistrements);
     }
 
+    public static function litAttributs(SourceDonnees $oSource) {
+        if (file_exists($oSource->getNom())) {
+            $ligneEntete = fgets(fopen($oSource->getNom(), 'r')); // Récupère l'entête du fichier
+            $aAttributs = explode($oSource->getSeparateur(), strtolower($ligneEntete));
+            return $aAttributs;
+        }
+        else {
+            throw new \RuntimeException('Le fichier '.$oSource->getNom().' n\'existe pas');
+        }
+    }
+
     protected static function litLigne($sLigne, $sSeparateur, $aChamps) {
         if (!preg_match('/^\s*$/',$sLigne)) {
-            $aValeurs = explode($sSeparateur, chop($sLigne));
+            $aValeurs = explode($sSeparateur, rtrim($sLigne));
             foreach($aChamps as $index => $sChamp) {
                 $aEnregistrement[$sChamp] = $aValeurs[$index];
             }
