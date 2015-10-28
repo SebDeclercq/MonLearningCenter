@@ -183,7 +183,7 @@ class ManagerCrudExcel implements IManagerCrud
                     break;
                 }
                 default :
-                    continue;
+                    break 2; //  Quitte le switch à la première itération répondant à default
             }
             $i++;
         }
