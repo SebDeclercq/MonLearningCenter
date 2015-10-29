@@ -78,4 +78,8 @@ class Perinorm extends SourceDonnees
     public function supprimeTout() {
         return ManagerCrudPerinorm::supprimeTout($this);
     }
+    public function litAttributs() {
+        $this->_aAttributs = ManagerCrudPerinorm::litAttributs($this);
+        return $this->_aAttributs;
+    }
 }
