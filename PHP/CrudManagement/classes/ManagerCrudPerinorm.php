@@ -134,4 +134,32 @@ class ManagerCrudPerinorm implements IManagerCrud
         file_put_contents($oSource->getNom(), $sSortie.PHP_EOL);
     }
 
+    public static function litAttributs(SourceDonnees $oSource) {
+        if (file_exists($oSource->getNom())) {
+            $fichier = file_get_contents($oSource->getNom());
+        }
+        else {
+            throw new \RuntimeException ('Le fichier '.$oSource->getNom().'n\'existe pas');
+        }
+
+        $aLignes = explode($oSource->getSeparateurEnregistrement(), $fichier);
+        $i = 0;
+        foreach ($aLignes as $sLigne) {
+            switch ($i) {
+                case 0 : {
+                    $aValeurs = explode($oSource->getSeparateur(), rtrim($sLigne));
+                    foreach ($aValeurs as $sValeur) {
+                        $aClefValeur = explode('=', $sValeur);
+                        $aAttributs[] = $aClefValeur[0];
+                    }
+                    break;
+                }
+                default :
+                    break 2;
+            }
+            $i++;
+        }
+        return $aAttributs;
+    }
+
 }
