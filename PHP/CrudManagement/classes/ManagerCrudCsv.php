@@ -113,7 +113,7 @@ class ManagerCrudCsv implements IManagerCrud
 // D
     public static function supprimeTout(SourceDonnees $oSource) {
         $entete = implode($oSource->getSeparateur(),$oSource->getAttributs());
-        file_put_contents($oSource->getNom(), $entete);
+        file_put_contents($oSource->getNom(), $entete."\n");
     }
 
     public static function supprimeEnregistrement(SourceDonnees $oSource, $clef) {
